@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+    <title>常用时间操作</title>
+    <!-- css -->
+    <style>
+        *{padding:5px;}
+        body{font-size:14px;line-height:1.4;}
+        .box{margin:0 0 30px 10px;}
+    </style>
+    <script src="js/common.js"></script>
+</head>
+<body>
+    <div class="box">
+        <h2>以当天为基准换算</h2>
+        <p>当年是否为闰年：<span id="is_leap_year"></span>, 一年共有<span id="count_days_all"></span>天</p>
+        <p>当年有几周：<span id="countWeeks"></span></p>
+        <p>当月有几天：<span id="count_days"></span></p>
+        <p>当天：<span id="today"></span></p>
+        <p>当前时间：<span id="nowTime"></span>,当前时间戳：<span id="nowTime_timestamp"></span></p>
+        <p>一周前：<span id="prev_d7"></span></p>
+        <p>10天后：<span id="next_d10"></span></p>
+        <p>60秒倒计时：<span id="countdown_s60"></span></p>
+        <p>2分钟倒计时：<span id="countdown_m2"></span></p>
+        <p>2小时倒计时：<span id="countdown_h2"></span></p>
+        <p>2天倒计时：<span id="countdown_d2"></span></p>
+    </div>
+
+    <div class="box">
+        <h2>以指定日期为基准换算</h2>
+        <input type="datetime-local" id="base_date" value="" />
+        <p>该年是闰年吗？回答：<span id="is_leap_year_thisy"></span></p>
+        <p>该月有几天？回答：<span id="count_days_thism"></span></p>
+        <p>往前推3天：<span id="base_prev_d3"></span></p>
+        <p>往后加15天：<span id="base_next_d15"></span></p>
+        <p>指定时间戳：1265338930748 换算成日期是：<span id="timestamp_to_date"></span></p>
+        <p>指定日期：2010-02-05 11:02:10:748 换算成时间戳是：<span id="date_to_timestamp"></span></p>
+        <button onclick="getResult()">一键换算</button>
+    </div>
+
+
+
+<!-- js -->
+<script charset="utf-8" src="js/common.js"></script>
+<script>
+    // =============================================================== 以当天为基准换算
+    //当年,是否为闰年，有几天
+    var is_leap_year_value = lpdt.isLeapYear() ? '是' : '否';
+    var count_days_all_value = lpdt.isLeapYear() ? '366' : '365';
+    setTextById('is_leap_year',is_leap_year_value);
+    setTextById('count_days_all',count_days_all_value);
+
+    //当年有几周：取满一周的周汇总，不满7天的不算
+    var countWeeks_value = lpdt.getWeeksByYear();
+    setTextById('countWeeks',countWeeks_value);
+
+    //当月有几天
+    var count_days_value = lpdt.countDaysByDate();
+    setTextById('count_days',count_days_value);
+
+    //当天日期
+    var today_value = lpdt.getToday();
+    setTextById('today',today_value);
+    
+    //当前时间
+    var nowTime_value = lpdt.getNowTime();
+    var nowTime_timestamp_value = lpdt.timestamp;
+    setTextById('nowTime',nowTime_value);
+    setTextById('nowTime_timestamp',nowTime_timestamp_value);
+
+    //日期加减：获取前7天的日期
+    var prev_d7_value = lpdt.dateOperator({
+        countDays:7,
+        type:'-'
+    });
+    setTextById('prev_d7',prev_d7_value);
+
+    //日期加减：获取10天后的日期
+    var next_d10_value = lpdt.dateOperator({
+        countDays:10
+    });
+    setTextById('next_d10',next_d10_value);
+
+    //倒计时60秒
+    lpdt.countDown({
+        times:60,
+        format:'秒',
+        callback:function(r){
+            setTextById('countdown_s60',r)
+        }
+    });
+    //倒计时2分
+    lpdt.countDown({
+        times:60*2,
+        format:'分秒',
+        callback:function(r){
+            setTextById('countdown_m2',r)
+        }
+    });
+    //倒计时2小时
+    lpdt.countDown({
+        times:60*60*2,
+        format:'时分秒',
+        callback:function(r){
+            setTextById('countdown_h2',r)
+        }
+    });
+    //倒计时2天
+    lpdt.countDown({
+        times:60*60*24*2,
+        format:'天时分秒',
+        callback:function(r){
+            setTextById('countdown_d2',r)
+        }
+    });
+
+
+
+
+
+
+
+    // =============================================================== 以指定日期为基准换算
+    function getResult(){
+        //指定日期
+        var d = document.getElementById("base_date").value; //type: String
+        var dd;
+        if(d) dd = new Date(d)                              //String to Date
+
+        //指定的年份是否为闰年
+        var is_leap_year_thisy_value = lpdt.isLeapYear(d) ? '是' : '否';
+        setTextById('is_leap_year_thisy',is_leap_year_thisy_value);
+
+        //指定的月份有几天
+        var count_days_thism_value = lpdt.countDaysByDate(dd && dd.getFullYear(),dd && dd.getMonth()+1);
+        setTextById('count_days_thism',count_days_thism_value);
+
+        //往前推3天：
+        var base_prev_d3_value = lpdt.dateOperator({
+            startTime:d,
+            countDays:3,
+            type:'-'
+        });
+        setTextById('base_prev_d3',base_prev_d3_value);
+
+        //往后加15天,分隔符改斜杠：
+        var base_next_d15_value = lpdt.dateOperator({
+            startTime:d,
+            countDays:15,
+            separator:'/'
+        });
+        setTextById('base_next_d15',base_next_d15_value);
+
+        //指定时间戳换算成日期
+        var timestamp_to_date_value = lpdt.timestampToDateStr(1265338930748,'-');
+        setTextById('timestamp_to_date',timestamp_to_date_value);
+
+        //指定日期换算成时间戳
+        var dateStr = "2010-02-05 11:02:10:748";
+        var date_to_timestamp_value = lpdt.dateToTimestamp(dateStr);
+        setTextById('date_to_timestamp',date_to_timestamp_value);
+    }
+
+
+
+</script>
+
+    
+</body>
+</html>

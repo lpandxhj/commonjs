@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+    <title>lpui test </title>
+    <!-- css -->
+    <link rel="stylesheet" href="css/lpui.css"/>
+    <style>
+        .box{margin:0 0 30px 10px;}
+        .btn{display:inline-block;padding:0 10px;background:limegreen;color:#fff;position:relative;margin:10px 10px 0 0;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="box">
+        <h2>loading </h2>
+        <a class="btn" href="javascript:lpui.showLoading();">显示loading</a>
+        <a class="btn" href="javascript:lpui.showLoading({opacity:0});">显示背景透明的loading</a>
+        <a class="btn" href="javascript:lpui.showLoading({opacity:1});">显示背景不透明的loading</a>
+        <a class="btn" href="javascript:lpui.showLoading({opacity:.5});">显示背景半透明的loading</a>
+        <a class="btn" href="javascript:lpui.showLoading({msg:'提交中，请稍后...'});">改变提示文字为 "提交中，请稍后..." </a>
+        <a class="btn" href="javascript:lpui.showLoading({duration:2000});">2000s自动关闭</a>
+        <a class="btn" style="z-index:4999;" href="javascript:lpui.removeLoading();">移除loading</a>
+    </div>
+
+    <div class="box">
+        <h2> toast </h2>
+        <a class="btn" href="javascript:lpui.showToast();">show toast 基础用法</a>
+        <a class="btn" href="javascript:lpui.showToast({type:'success',title:'中奖提示',msg:'恭喜你，中奖了'});">success</a>
+        <a class="btn" href="javascript:lpui.showToast({type:'error',title:'提交反馈',msg:'不能重复提交！'});">error</a>
+        <a class="btn" href="javascript:lpui.showToast({type:'warn',msg:'危险操作，已拦截'});">warn</a>
+        <a class="btn" href="javascript:lpui.showToast({duration:2000});">2000s自动关闭</a>
+        <a class="btn" href="javascript:lpui.showToast({handleClose:true,duration:0});">只能手动关闭toast</a>
+        <a class="btn" href="javascript:lpui.showToast({handleClose:true});">4000s内不手动关则自动关闭toast</a>
+        <a class="btn" href="javascript:lpui.showToast({width:300,handleClose:true,duration:0});">自定义窗口宽度</a>
+    </div>
+</div>
+
+
+<!-- js -->
+<script charset="utf-8" src="js/common.js"></script>
+</body>
+</html>

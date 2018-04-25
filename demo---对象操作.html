@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+    <title>常用的对象操作</title>
+    <!-- css -->
+    <style>
+        *{padding:5px;}
+        body{font-size:14px;line-height:1.4;}
+        .box{margin:0 0 30px 10px;}
+        .code-box{width:400px;height:100px;}
+        button{margin-left:10px;}
+    </style>
+</head>
+<body>
+<div>
+    <pre>
+        //数据源
+        var students = [
+            {id:1,name:'张三',sex:'male',score:68},
+            {id:2,name:'李燕',sex:'female',score:89},
+            {id:3,name:'王五',sex:'male',score:96},
+            {id:4,name:'陈六',sex:'male',score:48},
+            {id:5,name:'赵七',sex:'female',score:22},
+            {id:4,name:'陈六',sex:'male',score:48}
+        ]
+    </pre>
+
+    <div class="box">
+        <h2>按id去重<button onclick="removeTheSame()">去重</button></h2>
+        <textarea class="code-box" id="removethesameby_id"></textarea>
+    </div>
+
+    <div class="box">
+        <h2>去重后按sex分2组<button onclick="groupbySex()">分组</button></h2>
+        <textarea class="code-box" id="groupby_sex"></textarea>
+    </div>
+
+    <div class="box">
+        <h2>去重后按score降序<button onclick="sortbyScore()">降序</button></h2>
+        <textarea class="code-box" id="sortby_score"></textarea>
+    </div>
+
+    <div class="box">
+        <h2>随机抽取一位学生信息<button onclick="getOneStudent()">抽取</button></h2>
+        <textarea class="code-box" id="getOneStudent_random"></textarea>
+    </div>
+
+    <div class="box">
+        <h2>去重后随机排序<button onclick="sortRandom()">排序</button></h2>
+        <textarea class="code-box" id="sortby_random"></textarea>
+    </div>
+</div>
+
+<div class="box">
+    <h2>url参数转json</h2>
+    <p><span></span></p>
+</div>
+
+
+
+
+
+<!-- js -->
+<script charset="utf-8" src="js/common.js"></script>
+<script>
+    // =============================================================== 数组操作
+    var students = [
+        {id:1,name:'张三',sex:'male',score:68},
+        {id:2,name:'李燕',sex:'female',score:89},
+        {id:3,name:'王五',sex:'male',score:96},
+        {id:4,name:'陈六',sex:'male',score:48},
+        {id:5,name:'赵七',sex:'female',score:22},
+        {id:4,name:'陈六',sex:'male',score:48}
+    ]
+
+    function removeTheSame(){
+        //按id去重
+        var dataStr = JSON.stringify(lpobj.removeTheSameByKey(students,'id'));
+        document.getElementById('removethesameby_id').value = dataStr
+    }
+    function sortbyScore(){
+        //按score降序
+        var dataStr = lpobj.removeTheSameByKey(students,'id');
+        dataStr = JSON.stringify(lpobj.sortByKey(dataStr,'score','down'));
+        document.getElementById('sortby_score').value = dataStr
+    }
+    function groupbySex(){
+        //按sex分2组
+        var dataStr = lpobj.removeTheSameByKey(students,'id');
+        dataStr = JSON.stringify(lpobj.groupByKey(dataStr,'sex'));
+        document.getElementById('groupby_sex').value = dataStr
+    }
+    function getOneStudent(){
+        //随机抽取一名学生信息
+        var dataStr = JSON.stringify(lpobj.getRandomItem(students));
+        document.getElementById('getOneStudent_random').value = dataStr
+        
+    }
+    function sortRandom(){
+        //数组随机排序
+        var dataStr = lpobj.removeTheSameByKey(students,'id');
+        dataStr = JSON.stringify(lpobj.sortByRandom(dataStr));
+        document.getElementById('sortby_random').value = dataStr
+    }
+
+
+
+    // =============================================================== url参数和json互转
+    //urlParams to Json
+    var str = "http://www.baidu.com?a=1&b=2&c=3";
+    //console.log(lpobj.urlParamsToJson(str));//=> {a: "1", b: "2", c: "3"}
+
+    //json to urlParams
+    var obj = {a: "1", b: "2", c: "3"};
+    //console.log(lpobj.jsonToUrlParams(obj,0));//=> a=1&b=2&c=3
+    //console.log(lpobj.jsonToUrlParams(obj,1));//=> &a=1&b=2&c=3
+
+</script>
+</body>
+</html>
